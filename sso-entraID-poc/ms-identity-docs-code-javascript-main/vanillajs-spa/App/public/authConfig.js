@@ -11,7 +11,7 @@ const msalConfig = {
          // EXTERNAL TENANT
          // authority: "https://Enter_the_Tenant_Subdomain_Here.ciamlogin.com/", // Replace the placeholder with your tenant subdomain
         redirectUri: 'http://localhost:3000/', // You must register this URI on App Registration. Defaults to window.location.href e.g. http://localhost:3000/
-        navigateToLoginRequestUrl: true, // If "true", will navigate back to the original request location before processing the auth code response.
+         navigateToLoginRequestUrl: true, // If "true", will navigate back to the original request location before processing the auth code response.
     },
     cache: {
         cacheLocation: 'sessionStorage', // Configures cache location. "sessionStorage" is more secure, but "localStorage" gives you SSO.
