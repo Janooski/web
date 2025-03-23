@@ -14,7 +14,7 @@ The Identity provider (IDP) will be Microsoft Entra ID. An app registration is n
 
 [This quick-start guide](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-single-page-app-sign-in?pivots=workforce&tabs=javascript-workforce%2Cjavascript-external) gives a sample application that enable SSO via an app registration. Good for a proof of concept.
 
-## Next steps 14.03.2025
+## Next steps from the 14.03.2025
 
 - ✅ Create ticket for OST IT that request an Entra ID app registration.
 - ✅ Test sample application with another tenant.
@@ -36,3 +36,22 @@ Auth0 tenant was created to see is this would be a viable solution. First impres
 - [Pricing](https://auth0.com/pricing#full-features)
 - [Auth0 community post 1](https://community.auth0.com/t/is-enterprise-connections-with-azure-active-directory-included-with-developer-account/45099)
 - [Auth0 community post 2](https://community.auth0.com/t/enterprise-connections-in-free-tier/49515)
+
+### Keycloak
+
+Another option might be to use Keycloak which we need to host in a docker container. It is open source and could be hosted on the backend server if needed. [Getting started with Docker](https://www.keycloak.org/getting-started/getting-started-docker).
+
+!["Keycloak Microsoft"](./img/keycloak-microsoft.png "Keycloak Microsoft")
+
+[This repository](https://github.com/dsb-norge/vue-keycloak-js) might be an option for to implement Keycloak using vue js.
+
+### Clerk
+
+The second option Mateo suggested is to use clerk. Clerk has a Microsoft/Entra ID setting that from the looks of things is in the free tier. After entering application ID and client secret, we already managed to get his user created.
+
+![Clerk user created](./img/clerk-usercreated.png "Clerk user created")
+
+## To dos from the 23.03.2025
+
+- ✅ Roman to ask Jeremy about lost.university DNS records → yes it is Jeremy
+- Roman and Matteo to look at clerk together the coming days.
