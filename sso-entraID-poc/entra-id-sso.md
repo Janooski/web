@@ -14,19 +14,25 @@ The Identity provider (IDP) will be Microsoft Entra ID. An app registration is n
 
 [This quick-start guide](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-single-page-app-sign-in?pivots=workforce&tabs=javascript-workforce%2Cjavascript-external) gives a sample application that enable SSO via an app registration. Good for a proof of concept.
 
-## Next steps
+## Next steps 14.03.2025
 
-- Create ticket for OST IT that request an Entra ID app registration.
-- Test sample application with another tenant.
+- ✅ Create ticket for OST IT that request an Entra ID app registration.
+- ✅ Test sample application with another tenant.
 
-## Ticket OST
+App registration was created and can be found here: [Lost University SSO](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/bf9aa3af-f92b-429a-b44b-94e2ddbc4e0a/isMSAApp~/false).
 
-Guten Tag,
+## Continue work on 23.03.2025
 
-im SEProject ModuleDependencyOST bauen wir Verbesserungen und Erweiterungen der Website https://lost.university. Dabei handelt es sich um eine Website, mit der Informatik-Studierende Module visuell planen können. Momentan ist es eine Single Page Applikation die nur im Browser ausgeführt wird. Eine Verbesserung ist, dass unterschiedliche Pläne in einem Benutzerprofil gespeichert werden können. Dafür müssen wir eine Anmeldelogik bauen, die dafür naheliegenste Option ist eine SSO Anbindung mit OAuth an eine App Registration in Entra ID. Naheliegend weil es für die Benutzer, die onehin schon bei O365 angemeldet sind, die schönste Lösung ist und auch aus Sicht Security Sinn macht. Ausserdem ist es für uns eine Erleichterung, denn wir müssen uns nicht ums User Mangement kümmern und können weitere Features implementieren.
+Instead of using the sample application, Matteo suggested to used Auth0 or ... for the authentication part.
 
-Da ich beruflich selbst ab und an mit solchen Anfragen zu tun habe, kann ich ziemlich genau sagen was wir benötigen. Eine App Registration (Name zb: lost-university-sso) mit Owner-Berechtigungen genügt. Ab dort können wir die nötigen Einstellungen selbst vornehmen. Dieser Quick-start Guide erklärt, was wir vor haben: https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-single-page-app-sign-in?pivots=workforce&tabs=javascript-workforce%2Cjavascript-external#register-the-application-and-record-identifiers.
+### Auth0
 
-Wir hoffen, dass unsere Anfrage umgesetzt werden kann. Denn eine solche SSO Anbindung wäre für uns die beste Lösung. Bei allfälligen Rückfragen stehe ich natürlich zu Verfügung.
+Auth0 tenant was created to see is this would be a viable solution. First impression was good, there is a [quick-start guide for vue.js](https://auth0.com/docs/quickstart/spa/vuejs/interactive). It also supports Entra ID (Azure AD is the old name) SSO.
 
-Vielen Dank im Voraus, Gruss Roman
+!["Auth0 Entra ID"](./img/auth0-entra-id.png "Auth0 Entra ID")
+
+**Problem is that the Entra ID connection is a paid feature**. When signing up, you have 22 days with all settings, after that it will require us to switch to an enterprise plan if Azure AD SSO is used.
+
+- [Pricing](https://auth0.com/pricing#full-features)
+- [Auth0 community post 1](https://community.auth0.com/t/is-enterprise-connections-with-azure-active-directory-included-with-developer-account/45099)
+- [Auth0 community post 2](https://community.auth0.com/t/enterprise-connections-in-free-tier/49515)
