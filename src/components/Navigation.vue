@@ -212,6 +212,7 @@ export default defineComponent({
         },
       ],
       plans: [] as Plan[],
+      planName: '',
     };
   },
   mounted() {
