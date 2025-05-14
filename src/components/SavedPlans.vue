@@ -19,7 +19,7 @@
         <li
           v-for="plan in modulePlans"
           :key="plan.id"
-          class="flex items-center justify-between"
+          class="relative flex items-center justify-between"
           data-cy="SavedPlans-List-Item"
         >
           <button
@@ -37,13 +37,32 @@
           >
             {{ plan.name }}
           </router-link>
-          <button
-            class="p-2 hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 rounded-sm"
-            data-cy="SavedPlans-Delete-Button"
-            @click="deletePlan(plan.id)"
-          >
-            Löschen
-          </button>
+          <div class="relative">
+            <button
+              class="p-2 hover:bg-gray-100 rounded-sm"
+              @click="toggleMenu(plan.id)"
+            >
+              ⋮
+            </button>
+
+            <div
+              v-if="activePlanId === plan.id"
+              class="absolute right-0 top-full mt-1 bg-white shadow-lg border rounded-sm z-10"
+            >
+              <button
+                class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                @click="deletePlan(plan.id)"
+              >
+                Löschen
+              </button>
+              <button
+                class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                @click="sharePlan(plan.id)"
+              >
+              Teilen
+              </button>
+            </div>
+          </div>
         </li>
       </ul>
       <form
@@ -179,9 +198,15 @@ export default defineComponent({
   },
   data() {
     return {
-      modulePlans: [] as Plan[],
-      isEditingName: false,
-      planName: '',
+    modulePlans: [] as Plan[],
+    isEditingName: false,
+    planName: '',
+    activePlanId: null as string | null,
+    }
+  },
+  computed: {
+    isClerkReady() {
+      return this.isLoaded && this.isSignedIn;
     }
   },
   watch: {
@@ -213,11 +238,11 @@ export default defineComponent({
       await deletePlan(planId, token)
       await this.getPlans();
     },
-    async bookmarkPlan(planId: string){
+    async sharePlan(planId: string) {
       const token = await this.getToken() as string;
-      await bookmarkPlan(planId, token)
-      await this.getPlans();
-    }
+      await new PlanStore().sharePlan(planId, token);
+      this.activePlanId = null; // close the menu
+    },
   },
 })
 </script>
