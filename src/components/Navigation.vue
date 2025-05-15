@@ -45,16 +45,25 @@
             </div>
           </div>
         </template>
+        <SavedPlans
+          v-if="isSignedIn"
+        />
       </div>
 
       <div class="flex justify-end mr-2">
         <SignedOut>
-          <div data-cy="Navigation-SignInButton">
+          <div
+            data-cy="Navigation-SignInButton"
+            class="flex items-center"
+          >
             <SignInButton />
           </div>
         </SignedOut>
         <SignedIn>
-          <div data-cy="Navigation-UserButton">
+          <div
+            data-cy="Navigation-UserButton"
+            class="flex items-center"
+          >
             <UserButton />
           </div>
         </SignedIn>
@@ -106,24 +115,37 @@
           </div>
         </div>
       </template>
+      <SavedPlans
+        v-if="isSignedIn"
+      />
     </div>
   </nav>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/vue'
+import { SignedIn, SignedOut, SignInButton, useAuth, UserButton } from '@clerk/vue'
 
 import { SemesterInfo } from "../helpers/semester-info";
+
+import SavedPlans from "./SavedPlans.vue";
 
 /* eslint-disable max-len */
 export default defineComponent({
   name: 'Navigation',
   components: {
+    SavedPlans,
     SignedIn,
     SignedOut,
     SignInButton,
     UserButton,
+  },
+  setup() {
+    const { isSignedIn } = useAuth();
+
+    return {
+      isSignedIn,
+    };
   },
   data() {
     return {
@@ -159,7 +181,7 @@ export default defineComponent({
     onBurgerClick() {
       this.isBurgerActive = !this.isBurgerActive;
     },
-  },
+  }
 });
 </script>
 
