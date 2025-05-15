@@ -136,6 +136,10 @@ export default defineComponent({
       await new PlanStore().deletePlan(planId, token)
       await this.getPlans();
     },
+    async favouritePlan(planId: string){
+      const token = await this.getToken() as string;
+      await new PlanStore().favouritePlan(planId, token)
+    }
   },
 })
 </script>
