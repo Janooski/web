@@ -7,6 +7,7 @@ import { library, type IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import {
   faBars,
+  faBookmark,
   faChevronDown,
   faChevronUp,
   faCircleXmark,
@@ -20,6 +21,7 @@ import router from './router';
 import { store } from './helpers/store';
 
 library.add(faBars as IconDefinition);
+library.add(faBookmark as IconDefinition);
 library.add(faChevronUp as IconDefinition);
 library.add(faChevronDown as IconDefinition);
 library.add(faGithub as IconDefinition);

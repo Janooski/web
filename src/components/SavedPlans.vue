@@ -26,7 +26,8 @@
             class="p-2 hover:bg-gray-100 rounded-sm"
             data-cy="SavedPlans-Bookmark-Button"
             @click="bookmarkPlan(plan.id)"
-          > ★
+          > 
+          <font-awesome-icon :icon="['fa', 'bookmark']" />
           </button>
           <router-link
             :to="plan.content"
