@@ -62,9 +62,9 @@ export class PlanStore {
     }
   }
 
-  async favouritePlan(planId: string, token: string): Promise<void> {
+  async bookmarkPlan(planId: string, token: string): Promise<void> {
     try {
-      const response = await fetch(`/api/plan/favourite/${planId}`, {
+      const response = await fetch(`/api/plan/bookmark/${planId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -72,10 +72,10 @@ export class PlanStore {
         },
       });
       if (!response.ok) {
-        throw new Error('Failed to (un)favourite plan');
+        throw new Error('Failed to (un)bookmark plan');
       }
     } catch (error) {
-      console.error('Error to favourite plan:', error);
+      console.error('Error to bookmark plan:', error);
       throw error;
     }
   }

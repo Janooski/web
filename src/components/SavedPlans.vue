@@ -24,8 +24,8 @@
         >
         <button
             class="p-2 hover:bg-gray-100 rounded-sm"
-            data-cy="SavedPlans-Favourite-Button"
-            @click="favouritePlan(plan.id)"
+            data-cy="SavedPlans-Bookmark-Button"
+            @click="bookmarkPlan(plan.id)"
           > ★
           </button>
           <router-link
@@ -136,9 +136,9 @@ export default defineComponent({
       await new PlanStore().deletePlan(planId, token)
       await this.getPlans();
     },
-    async favouritePlan(planId: string){
+    async bookmarkPlan(planId: string){
       const token = await this.getToken() as string;
-      await new PlanStore().favouritePlan(planId, token)
+      await new PlanStore().bookmarkPlan(planId, token)
     }
   },
 })
