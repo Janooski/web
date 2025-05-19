@@ -27,7 +27,8 @@
             data-cy="SavedPlans-Bookmark-Button"
             @click="bookmarkPlan(plan.id)"
           > 
-          <font-awesome-icon :icon="['fa', 'bookmark']" />
+          <font-awesome-icon :icon="[plan.bookmark ? 'fas' : 'far', 'bookmark']" />
+
           </button>
           <router-link
             :to="plan.content"
