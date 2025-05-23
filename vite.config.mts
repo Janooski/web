@@ -4,10 +4,14 @@ import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
-  plugins: [vue(), tailwindcss(), VitePWA({
-    registerType: 'autoUpdate',
-    devOptions: {
-      enabled: true,
+  plugins: [vue(), tailwindcss()],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
     },
     includeAssets: ['*.png', '*.jpg'],
     workbox: {
