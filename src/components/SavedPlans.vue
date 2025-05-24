@@ -33,7 +33,7 @@
           </button>
           <router-link
             :to="plan.content"
-            class="p-2 hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 rounded-sm flex-auto"
+            class="p-2 hover:bg-gray-100 rounded-sm flex-grow"
           >
             {{ plan.name }}
           </router-link>
@@ -57,7 +57,7 @@
                 @click="sharePlan(plan.id)"
               >
                 <font-awesome-icon
-                  :icon="copiedPlanId === plan.id ? ['fas', 'check'] : ['fas', 'share']"
+                  :icon="copiedPlanId === plan.id ? ['fas', 'check'] : ['fas', 'up-right-from-square']"
                   :class="copiedPlanId === plan.id ? 'text-green-600' : 'text-black'"
                 />
                 <span class="sr-only">Teilen</span>
@@ -183,9 +183,9 @@ import { useAuth } from "@clerk/vue";
 import { type Plan, PlanStore } from "../helpers/plan-store";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTrash, faShare, faCheck, faChevronDown, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faUpRightFromSquare, faCheck, faChevronDown, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faTrash, faShare, faCheck, faChevronDown, faEllipsisVertical);
+library.add(faTrash, faUpRightFromSquare, faCheck, faChevronDown, faEllipsisVertical);
 
 export default defineComponent({
   name: 'SavedPlans',
