@@ -130,18 +130,12 @@ export default defineComponent({
     const showHistoryDialog = ref(false);
     const historyPlanId = ref<string | null>(null);
 
-    function closeSavePlansHistory() {
-      showHistoryDialog.value = false;
-      historyPlanId.value = null;
-    }
-
     return {
       getToken,
       isLoaded,
       isSignedIn,
       activePlanId,
       copiedPlanId,
-      closeSavePlansHistory,
       historyPlanId,
       showHistoryDialog,
     };
@@ -217,6 +211,9 @@ export default defineComponent({
       this.showHistoryDialog = true;
       console.log('Call SavedPlansHistory with this ID.')
       console.log(planId)
+    },
+    closeSavePlansHistory(){
+      this.showHistoryDialog = false;
     },
   },
 })
