@@ -13,7 +13,8 @@ import {
   faCheck,
   faInfoCircle,
   faCircleExclamation,
-  faCircleQuestion
+  faCircleQuestion,
+  faClockRotateLeft,
 } from '@fortawesome/free-solid-svg-icons';
 import App from './App.vue';
 import router from './router';
@@ -28,6 +29,7 @@ library.add(faCheck as IconDefinition);
 library.add(faInfoCircle as IconDefinition);
 library.add(faCircleExclamation as IconDefinition);
 library.add(faCircleQuestion as IconDefinition);
+library.add(faClockRotateLeft as IconDefinition);
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 

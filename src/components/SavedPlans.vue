@@ -55,6 +55,12 @@
               </button>
               <button
                 class="flex items-center gap-2 w-full text-left px-4 py-2 hover:bg-gray-100"
+                
+              >
+              <font-awesome-icon :icon="['fas', 'clock-rotate-left']" />
+              </button>
+              <button
+                class="flex items-center gap-2 w-full text-left px-4 py-2 hover:bg-gray-100"
                 @click="deletePlan(plan.id)"
               >
                 <font-awesome-icon
