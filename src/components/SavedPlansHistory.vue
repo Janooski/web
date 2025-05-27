@@ -69,7 +69,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch, defineProps, defineEmits } from 'vue'
 import {
   TransitionRoot,
   TransitionChild,
@@ -78,10 +78,24 @@ import {
   DialogTitle,
 } from '@headlessui/vue'
 
+const props = defineProps({
+  planId: String,
+  // Optionally add more props as needed
+})
+const emit = defineEmits(['close'])
+
 const isOpen = ref(true)
+
+watch(
+  () => props.planId,
+  () => {
+    isOpen.value = true
+  }
+)
 
 function closeModal() {
   isOpen.value = false
+  emit('close')
 }
 function openModal() {
   isOpen.value = true
