@@ -55,7 +55,7 @@
               </button>
               <button
                 class="flex items-center gap-2 w-full text-left px-4 py-2 hover:bg-gray-100"
-                
+                @click.stop="openSavePlansHistory(plan.id)"
               >
               <font-awesome-icon :icon="['fas', 'clock-rotate-left']" />
               </button>
@@ -111,22 +111,38 @@ import { type Plan, PlanStore } from "../helpers/plan-store";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTrash, faUpRightFromSquare, faCheck, faChevronDown, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import SavedPlansHistory from './SavedPlansHistory.vue';
 
 library.add(faTrash, faUpRightFromSquare, faCheck, faChevronDown, faEllipsisVertical);
 
 export default defineComponent({
   name: 'SavedPlans',
-  components: { FontAwesomeIcon },
+  components: { FontAwesomeIcon, SavedPlansHistory },
   setup() {
     const { getToken, isLoaded, isSignedIn } = useAuth();
     const activePlanId = ref<string | null>(null);
     const copiedPlanId = ref<string | null>(null);
+    const showHistoryDialog = ref(false);
+    const historyPlanId = ref<string | null>(null);
+
+    function openSavePlansHistory(planId: string) {
+      console.log("openSaveLog")
+      historyPlanId.value = planId;
+      showHistoryDialog.value = true;
+    }
+    function closeSavePlansHistory() {
+      showHistoryDialog.value = false;
+      historyPlanId.value = null;
+    }
+
     return {
       getToken,
       isLoaded,
       isSignedIn,
       activePlanId,
       copiedPlanId,
+      openSavePlansHistory,
+      closeSavePlansHistory,
     };
   },
   data() {
