@@ -60,6 +60,7 @@
 
 <script lang="ts">
 import { ref, watch, defineComponent } from 'vue'
+import { useAuth } from "@clerk/vue";
 import {
   TransitionRoot,
   TransitionChild,
@@ -67,9 +68,23 @@ import {
   DialogPanel,
   DialogTitle,
 } from '@headlessui/vue'
+import { PlanStore, type Plan } from '../helpers/plan-store'
 
 export default defineComponent({
   name: 'SavedPlansHistory',
+  setup() {
+    const { getToken, isLoaded, isSignedIn } = useAuth();
+    const showHistoryDialog = ref(false);
+    const historyPlanId = ref<string | null>(null);
+
+    return {
+      getToken,
+      isLoaded,
+      isSignedIn,
+      historyPlanId,
+      showHistoryDialog,
+    };
+  },
   props: {
     planId: {
       type: String,
@@ -80,12 +95,17 @@ export default defineComponent({
   data() {
     return {
       isOpen: true,
+      planHistory: [] as Plan[], // store the fetched history
     }
   },
   watch: {
-    planId() {
+    async planId(newPlanId) {
       this.isOpen = true
-      // Optionally call fetchSavedPlans here if needed
+      console.log("newPlanID")
+      console.log(newPlanId)
+      if (newPlanId) {
+        this.fetchSavedPlanHistory(newPlanId)
+      }
     },
   },
   methods: {
@@ -96,7 +116,12 @@ export default defineComponent({
     openModal() {
       this.isOpen = true
     },
-    // Optionally add fetchSavedPlans here
+    async fetchSavedPlanHistory(planId: string): Promise<Plan[]> {
+      const token = await this.getToken() as string;
+      this.planHistory = await new PlanStore().fetchSavedPlanHistory(planId, token)
+      console.log(this.planHistory)
+      return this.planHistory
+    },
   },
 })
 </script>

@@ -25,6 +25,22 @@ export class PlanStore {
     }
   }
 
+  async fetchSavedPlanHistory(plan_id: string, token: string): Promise<Plan[]>{
+    try{
+      const response = await fetch(`/plans/history/${plan_id}"`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const data = await response.json();
+      return data.plans;
+    } catch (error) {
+      console.error('Error fetching plan history:', error);
+      throw error;
+    }
+  }
+
   async savePlan(planName: string, modules: string, token: string): Promise<void> {
     const payload = JSON.stringify({ name: planName, content: modules });
     try {

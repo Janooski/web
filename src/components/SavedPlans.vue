@@ -209,11 +209,11 @@ export default defineComponent({
     },
     savePlansHistory(planId: string) {
       this.showHistoryDialog = true;
-      console.log('Call SavedPlansHistory with this ID.')
-      console.log(planId)
+      this.historyPlanId = planId;
     },
     closeSavePlansHistory(){
       this.showHistoryDialog = false;
+      this.historyPlanId = null;
     },
   },
 })
