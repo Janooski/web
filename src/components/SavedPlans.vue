@@ -213,7 +213,6 @@ export default defineComponent({
     },
     closeSavePlansHistory(){
       this.showHistoryDialog = false;
-      this.historyPlanId = null;
     },
   },
 })

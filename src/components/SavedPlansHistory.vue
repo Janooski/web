@@ -59,7 +59,7 @@
 </template>
 
 <script lang="ts">
-import { ref, watch, defineComponent } from 'vue'
+import { ref, defineComponent } from 'vue'
 import { useAuth } from "@clerk/vue";
 import {
   TransitionRoot,
@@ -95,7 +95,7 @@ export default defineComponent({
   data() {
     return {
       isOpen: true,
-      planHistory: [] as Plan[], // store the fetched history
+      planHistory: [] as Plan[],
     }
   },
   watch: {
