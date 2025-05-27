@@ -55,7 +55,7 @@
               </button>
               <button
                 class="flex items-center gap-2 w-full text-left px-4 py-2 hover:bg-gray-100"
-                 @click.stop="openSavePlansHistory(plan.id)"
+                 @click.stop="savePlansHistory(plan.id)"
               >
               <font-awesome-icon :icon="['fas', 'clock-rotate-left']" />
               </button>
@@ -130,10 +130,6 @@ export default defineComponent({
     const showHistoryDialog = ref(false);
     const historyPlanId = ref<string | null>(null);
 
-    function openSavePlansHistory(planId: string) {
-      historyPlanId.value = planId;
-      showHistoryDialog.value = true;
-    }
     function closeSavePlansHistory() {
       showHistoryDialog.value = false;
       historyPlanId.value = null;
@@ -145,7 +141,6 @@ export default defineComponent({
       isSignedIn,
       activePlanId,
       copiedPlanId,
-      openSavePlansHistory,
       closeSavePlansHistory,
       historyPlanId,
       showHistoryDialog,
@@ -217,6 +212,11 @@ export default defineComponent({
       } catch (err) {
         console.error('Failed to copy link:', err);
       }
+    },
+    savePlansHistory(planId: string) {
+      this.showHistoryDialog = true;
+      console.log('Call SavedPlansHistory with this ID.')
+      console.log(planId)
     },
   },
 })
