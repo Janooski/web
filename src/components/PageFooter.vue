@@ -65,5 +65,10 @@ export default defineComponent({
       ],
     },
   },
+  computed: {
+    isGraphRoute(): boolean {
+      return this.$route.path.startsWith('/graph/');
+    },
+  },
 });
 </script>

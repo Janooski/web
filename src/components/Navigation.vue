@@ -55,9 +55,25 @@
           v-if="isSignedIn"
         />
       </div>
+      <NavigationToggleValidation />
+
+      <button
+        class="ml-8 px-4 py-2 bg-gray-800 text-white rounded"
+        data-cy="activate-graph-button"
+        @click="showGraphModal = true"
+      >
+        Graph
+      </button>
+
+      <GraphModal
+        :open="showGraphModal"
+        @close="showGraphModal = false"
+      />
+
+      
 
       <div class="flex justify-end mr-2">
-        <ToggleDarkMode />
+        <NavigationToggleDarkMode />
         <SignedOut>
           <div
             data-cy="Navigation-SignInButton"
@@ -134,11 +150,15 @@
 import { defineComponent } from 'vue';
 import { SignedIn, SignedOut, SignInButton, useAuth, UserButton } from '@clerk/vue'
 import { SemesterInfo } from "../helpers/semester-info";
-import ToggleDarkMode from './ToggleDarkMode.vue';
+import NavigationToggleDarkMode from './NavigationToggleDarkMode.vue';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import SavedPlans from "./SavedPlans.vue";
+import NavigationToggleValidation from "./NavigationToggleValidation.vue";
+import GraphModal from '../components/Graph.vue';
+
+
 
 library.add(faChevronDown);
 
@@ -151,8 +171,10 @@ export default defineComponent({
     SignedOut,
     SignInButton,
     UserButton,
-    ToggleDarkMode,
-    FontAwesomeIcon
+    NavigationToggleDarkMode,
+    FontAwesomeIcon,
+    NavigationToggleValidation,
+    GraphModal
   },
   setup() {
     const { isSignedIn } = useAuth();
@@ -163,6 +185,7 @@ export default defineComponent({
   },
   data() {
     return {
+      showGraphModal: false,
       isBurgerActive: false,
       startSemesterName: SemesterInfo.latestAutumnSemester().toString(),
       categories: [
@@ -190,6 +213,11 @@ export default defineComponent({
         },
       ],
     };
+  },
+  computed: {
+    currentHash(): string {
+      return this.$route.hash;
+    },
   },
   methods: {
     onBurgerClick() {
