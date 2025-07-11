@@ -60,6 +60,22 @@ const bookmarkPlan = async (planId: string, token: string): Promise<void> => {
   }
 }
 
+const updatePlan =  async (planId: string, modules: string, token: string): Promise<void> => {
+  const payload = JSON.stringify({ content: modules });
+  try {
+    await fetch(`/api/plans/${planId}/update`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: payload,
+    });
+  } catch (error) {
+    console.error('Error updating plan', error)
+  }
+}
+
 const fetchSharedPlan = async (slug: string|string[]): Promise<string> => {
   try {
     const response = await fetch(`/api/plans/shared/${slug}`);
@@ -75,4 +91,19 @@ const fetchSharedPlan = async (slug: string|string[]): Promise<string> => {
   }
 }
 
-export { fetchSavedPlans, savePlan, deletePlan, bookmarkPlan, fetchSharedPlan };
+const fetchPlanHistory = async (planId: string, token: string): Promise<SavedPlan[]> => {
+  try {
+    const response = await fetch(`/api/plans/history/${planId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    const data = await response.json();
+    return data.plans.map(planHelper.map);
+  } catch (error) {
+    console.error('Error fetching plan history:', error);
+    return []
+  }
+}
+
+export { fetchSavedPlans, savePlan, deletePlan, bookmarkPlan, updatePlan, fetchSharedPlan, fetchPlanHistory };
