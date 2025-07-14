@@ -1,6 +1,9 @@
 <template>
   <button
-    class="bg-gray-800 text-white dark:bg-gray-700 p-1 rounded-sm print:hidden"
+    class="
+      flex items-center gap-2 w-full text-left px-4 py-2
+      hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700
+    "
     data-cy="SavedPlansHistoryDialog-Dialog-Button"
     type="button"
     @click="isOpen = true"
@@ -19,6 +22,24 @@
     >
       <DialogPanel>
         <div>
+          <DialogTitle
+            as="h3"
+            class="text-lg font-medium leading-6 text-gray-900"
+          >
+            {{ currentPlan.name }}
+          </DialogTitle>
+          <button
+            class="bg-gray-800 text-white dark:bg-gray-700 p-1 rounded-sm print:hidden"
+            data-cy="SavedPlansHistoryDialog-Close-Button"
+            type="button"
+            @click="isOpen = false"
+          >
+            <font-awesome-icon
+              :icon="['fas', 'circle-xmark']"
+            />
+          </button>
+        </div>
+        <div>
           <ul>
             <li
               v-for="plan in planHistory"
@@ -30,7 +51,7 @@
                 :to="plan.content"
                 class="p-2 hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 rounded-sm flex-auto"
               >
-                {{ plan.content }}
+                {{ plan.createdAt }} - {{ plan.content }}
               </router-link>
             </li>
           </ul>
@@ -43,27 +64,30 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useAuth } from "@clerk/vue";
+import { fetchPlanHistory } from "../api/plan";
+import type { Plan } from "../types/Plan";
 import {
   Dialog as HeadlessUIDialog,
   DialogPanel,
+  DialogTitle,
 } from '@headlessui/vue';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import type { Plan } from "../types/Plan";
-import { fetchPlanHistory } from "../api/plan";
-import SavedPlansActionMenu from "./SavedPlansActionMenu.vue";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faClockRotateLeft, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faClockRotateLeft, faCircleXmark);
 
 export default defineComponent({
   name: 'SavedPlansHistoryModal',
   components: {
-    SavedPlansActionMenu,
     FontAwesomeIcon,
-    HeadlessUIDialog, DialogPanel
+    HeadlessUIDialog, DialogPanel, DialogTitle
   },
   props: {
-    planId: {
-      type: String,
+    currentPlan: {
+      type: Object as () => Plan,
       required: true
-    }
+    },
   },
   setup() {
     const { getToken } = useAuth();
@@ -83,7 +107,8 @@ export default defineComponent({
     isOpen: {
       async handler(newValue) {
         if (newValue) {
-          await this.getPlanHistory(this.planId);
+          console.log(newValue)
+          await this.getPlanHistory(this.currentPlan.id);
         }
       },
       deep: true,

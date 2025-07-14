@@ -17,43 +17,46 @@
       class="absolute z-10 bg-white dark:bg-zinc-800 shadow-lg rounded-sm"
       :class="menuPositionClass"
     >
-      <div class="px-1 py-1">
-        <MenuItem
-          v-slot="{ close }"
-          as="div"
+      <MenuItem
+        v-slot="{ close }"
+        as="div"
+      >
+        <button
+          class="
+           flex items-center gap-2 w-full text-left px-4 py-2
+          hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700
+          "
+          data-cy="SavedPlansActionMenu-Share-Button"
+          @click.stop.prevent="sharePlan(close)"
         >
-          <button
-            class="
-             flex items-center gap-2 w-full text-left px-4 py-2
+          <font-awesome-icon
+            data-cy="SavedPlansActionMenu-Share-Icon"
+            :icon="planCopied ? ['fas', 'check'] : ['fas', 'share-nodes']"
+            :class="planCopied ? 'text-green-600' : 'text-black dark:text-white'"
+          />
+        </button>
+      </MenuItem>
+      <MenuItem
+        as="div"
+      >
+        <SavedPlansHistoryModal
+          :current-plan="plan"
+        />
+      </MenuItem>
+      <MenuItem
+        as="div"
+      >
+        <button
+          class="
+            flex items-center gap-2 w-full text-left px-4 py-2
             hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700
-            "
-            data-cy="SavedPlansActionMenu-Share-Button"
-            @click.stop.prevent="sharePlan(close)"
-          >
-            <font-awesome-icon
-              data-cy="SavedPlansActionMenu-Share-Icon"
-              :icon="planCopied ? ['fas', 'check'] : ['fas', 'share-nodes']"
-              :class="planCopied ? 'text-green-600' : 'text-black dark:text-white'"
-            />
-          </button>
-        </MenuItem>
-      </div>
-      <div class="px-1 py-1">
-        <MenuItem
-          as="div"
+          "
+          data-cy="SavedPlansActionMenu-Delete-Button"
+          @click="deletePlan"
         >
-          <button
-            class="
-              flex items-center gap-2 w-full text-left px-4 py-2
-              hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700
-            "
-            data-cy="SavedPlansActionMenu-Delete-Button"
-            @click="deletePlan"
-          >
-            <font-awesome-icon :icon="['fas', 'trash']" />
-          </button>
-        </MenuItem>
-      </div>
+          <font-awesome-icon :icon="['fas', 'trash']" />
+        </button>
+      </MenuItem>
     </MenuItems>
   </HeadlessUIMenu>
 </template>
@@ -61,16 +64,18 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import type { Plan } from '../types/Plan';
+import SavedPlansHistoryModal from "./SavedPlansHistoryModal.vue";
 import { Menu as HeadlessUIMenu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faTrash, faCheck, faEllipsis, faShareNodes } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faCheck, faEllipsis, faShareNodes, faClockRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import { library } from "@fortawesome/fontawesome-svg-core";
 
-library.add(faTrash, faCheck, faEllipsis, faShareNodes);
+library.add(faTrash, faCheck, faEllipsis, faShareNodes, faClockRotateLeft );
 
 export default defineComponent({
   name: 'SavedPlansActionMenu',
   components: {
+    SavedPlansHistoryModal,
     HeadlessUIMenu,
     MenuButton,
     MenuItems,

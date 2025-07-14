@@ -37,6 +37,17 @@
           >
             {{ plan.name }}
           </router-link>
+          <button
+            class="p-2 hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 rounded-sm"
+            data-cy="SavedPlans-Update-Button"
+            @click="updatePlan(plan.id)"
+          >
+            <font-awesome-icon
+              data-cy="SavedPlans-Update-Icon"
+              :icon="planUpdated ? ['fas', 'check'] : ['fas', 'floppy-disk']"
+              :class="planUpdated ? 'text-green-600' : 'text-black dark:text-white'"
+            />
+          </button>
           <SavedPlansActionMenu
             :plan="plan"
             @delete="deletePlan"
@@ -104,6 +115,17 @@
         >
           {{ plan.name }}
         </router-link>
+        <button
+          class="p-2 hover:bg-gray-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 rounded-sm"
+          data-cy="SavedPlans-Update-Button"
+          @click="updatePlan(plan.id)"
+        >
+          <font-awesome-icon
+            data-cy="SavedPlans-Update-Icon"
+            :icon="planUpdated ? ['fas', 'check'] : ['fas', 'floppy-disk']"
+            :class="planUpdated ? 'text-green-600' : 'text-black dark:text-white'"
+          />
+        </button>
         <SavedPlansActionMenu
           :plan="plan"
           :menu-position-class="'right-0 mt-1'"
@@ -146,15 +168,15 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useAuth } from "@clerk/vue";
-import { fetchSavedPlans, savePlan, deletePlan, bookmarkPlan } from "../api/plan";
+import { fetchSavedPlans, savePlan, deletePlan, bookmarkPlan, updatePlan } from "../api/plan";
 import type { Plan } from "../types/Plan";
 import SavedPlansActionMenu from "./SavedPlansActionMenu.vue";
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faBookmark, faFloppyDisk, faCheck } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faChevronDown);
+library.add(faChevronDown, faBookmark, faFloppyDisk, faCheck);
 
 export default defineComponent({
   name: 'SavedPlans',
@@ -179,6 +201,7 @@ export default defineComponent({
       modulePlans: [] as Plan[],
       isEditingName: false,
       planName: '',
+      planUpdated: false
     }
   },
   watch: {
@@ -213,6 +236,17 @@ export default defineComponent({
     async bookmarkPlan(planId: string){
       const token = await this.getToken() as string;
       await bookmarkPlan(planId, token)
+      await this.getPlans();
+    },
+    async updatePlan(planId: string) {
+      const token = await this.getToken() as string;
+      let plan = this.$route.path.replace('/plan/', '') + "?" + new URLSearchParams(this.$route.query).toString();
+      await updatePlan(planId, plan, token);
+      this.planUpdated = true;
+      setTimeout(() => {
+          this.planUpdated = false;
+          close();
+        }, 1000);
       await this.getPlans();
     }
   },
